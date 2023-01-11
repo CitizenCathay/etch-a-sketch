@@ -1,1 +1,1 @@
-const container = document.getElementById("container");
+const container = document.getElementById("gridContainer");

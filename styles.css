@@ -1,0 +1,28 @@
+body {
+    background-image: linear-gradient(#c2b9f3, #eba3d3);
+    min-height: 100vh;
+    font-family: Verdana, sans-serif;
+    overflow-y: hidden; 
+    overflow-x: hidden; 
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    margin-top: 4vh;
+}
+
+h1 {
+    font-size: 4vh;
+}
+
+.sectionWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: 81vh;
+    text-align: center;
+    font-size: 2.5vh;
+}
