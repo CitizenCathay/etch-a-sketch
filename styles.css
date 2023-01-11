@@ -27,10 +27,16 @@ h1 {
     flex-direction: column;
 }
 
-.gridContainer {
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+#gridContainer {
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0 20px 4px rgba(0,0,0,0.5);
+    box-shadow: 0 0 20px 4px rgba(0,0,0,0.4);
+    background-color: rgb(255, 242, 226);
     width: 512px;
     height: 512px;
 }
@@ -38,7 +44,7 @@ h1 {
 /* Footer */
 
 footer {
-    margin-top: 81vh;
+    margin-top: 26vh;
     text-align: center;
     font-size: 2.5vh;
     font-weight: 600;
