@@ -6,23 +6,42 @@ body {
     overflow-x: hidden; 
 }
 
+/* Header section with title */
+
 header {
     display: flex;
     justify-content: center;
-    margin-top: 4vh;
+    margin-top: 3vh;
 }
 
 h1 {
     font-size: 4vh;
+    color: bisque;
+    text-shadow: 3px 3px #0e0606;
 }
+
+/* Content section */
 
 .sectionWrapper {
     display: flex;
     flex-direction: column;
 }
 
+.gridContainer {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px 4px rgba(0,0,0,0.5);
+    width: 512px;
+    height: 512px;
+}
+
+/* Footer */
+
 footer {
     margin-top: 81vh;
     text-align: center;
     font-size: 2.5vh;
+    font-weight: 600;
+    color: bisque;
+    text-shadow: 2px 2px #0e0606;
 }

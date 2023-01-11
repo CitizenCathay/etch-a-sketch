@@ -1,1 +1,7 @@
-const container = document.getElementById("gridContainer");
+const gridContainer = document.getElementById("gridContainer");
+
+function createGrid() {
+
+}
+
+createGrid();
