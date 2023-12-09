@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Etch-a-sketch",
@@ -16,15 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="h-screen	flex flex-col">
-        <header className="flexBetween">
-          <h1 className="max-container padding-container relative z-30 pt-1.5 pb-5 font-bold text-3xl md:text-5xl sm:text-4xl">
-            Etch-a-sketch
-          </h1>
-        </header>
-        <main className="relative overflow-hidden flex-1">{children}</main>
-        <footer className="bottom-0 fixed w-screen flex justify-center text-xs md:text-sm">
-          <Footer />
-        </footer>
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );
