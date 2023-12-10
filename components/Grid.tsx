@@ -18,9 +18,6 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
     ) as HTMLDivElement | null;
     if (gridContainer) {
       gridContainer.innerHTML = ""; // Clear previous content
-      gridContainer.style.display = "grid";
-      gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-      gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
 
       let isMouseDown = false;
       const handleMouseDown = () => {
@@ -50,7 +47,14 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
 
   return (
     <div className="gridComponent mt-1 xl:ml-56">
-      <div className="gridContainer w-96 h-96 md:w-[39rem] md:h-[39rem] sm:h-[30rem] sm:w-[30rem] border-2 border-red-500 "></div>
+      <div
+        className="gridContainer w-96 h-96 md:w-[39rem] md:h-[39rem] sm:h-[30rem] sm:w-[30rem] border-2 border-red-500"
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+          gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+        }}
+      ></div>
     </div>
   );
 };
