@@ -8,10 +8,8 @@ const Grid: React.FC<GridProps> = ({ gridSize }) => {
   // Import gridSize value from Controls parent component
 
   return (
-    <div className="grid">
-      <p className="select-none	">
-        Grid Size: {gridSize} × {gridSize}
-      </p>
+    <div className="gridComponent mt-1 sm:ml-36">
+      <div className="w-56 h-56 sm:w-72 sm:h-72 border-2 border-red-500 "></div>
     </div>
   );
 };

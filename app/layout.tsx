@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="h-screen	flex flex-col">
+      <body className="flex flex-col overflow-y-auto">
         <Header />
         {children}
         <Footer />

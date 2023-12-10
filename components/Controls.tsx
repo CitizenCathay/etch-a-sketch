@@ -10,16 +10,27 @@ const Controls = () => {
   };
   /* console.log(gridSize); */
   return (
-    <div className="gridControls">
+    <div className="gridControls flex	justify-center items-center	flex-col sm:flex-row">
       <Grid gridSize={gridSize} />
-      <input
-        type="range"
-        min="1"
-        max="64"
-        value={gridSize}
-        onChange={gridSizeChange}
-        id="gridSizeRange"
-      />
+      <div className="gridControls sm:ml-4 flex flex-col space-y-6 mt-6 sm:mt-0">
+        <button className="border rounded border-black ">Color Mode</button>
+        <button className="border rounded border-black">Rainbow Mode</button>
+        <button className="border rounded border-black">Eraser</button>
+        <button className="border rounded border-black">Clear</button>
+        <div className="sizeControl">
+          <p className="select-none	">
+            Grid Size: {gridSize} × {gridSize}
+          </p>
+          <input
+            type="range"
+            min="1"
+            max="64"
+            value={gridSize}
+            onChange={gridSizeChange}
+            id="gridSizeRange"
+          />
+        </div>
+      </div>
     </div>
   );
 };
