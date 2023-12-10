@@ -10,7 +10,7 @@ const Controls = () => {
   };
   /* console.log(gridSize); */
   return (
-    <div className="gridControls flex	justify-center items-center	flex-col sm:flex-row">
+    <div className="gridControls flex	justify-center items-center	flex-col sm:flex-row mb-6">
       <Grid gridSize={gridSize} />
       <div className="gridControls sm:ml-4 flex flex-col space-y-6 mt-6 sm:mt-0">
         <button className="border rounded border-black ">Color Mode</button>
