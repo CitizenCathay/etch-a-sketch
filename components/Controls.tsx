@@ -10,13 +10,14 @@ const Controls = () => {
   };
   /* console.log(gridSize); */
   return (
-    <div className="gridControls flex	justify-center items-center	flex-col sm:flex-row mb-6">
+    <div className="gridControls flex	justify-center items-center	flex-col lg:flex-row mb-6">
       <Grid gridSize={gridSize} />
-      <div className="gridControls sm:ml-4 flex flex-col space-y-6 mt-6 sm:mt-0">
+      <div className="gridControls lg:ml-4 flex flex-col space-y-6 mt-6 sm:mt-5">
         <button className="border rounded border-black ">Color Mode</button>
         <button className="border rounded border-black">Rainbow Mode</button>
         <button className="border rounded border-black">Eraser</button>
         <button className="border rounded border-black">Clear</button>
+        <button className="border rounded border-black ">Toggle Cells</button>
         <div className="sizeControl">
           <p className="select-none	">
             Grid Size: {gridSize} × {gridSize}
@@ -28,6 +29,7 @@ const Controls = () => {
             value={gridSize}
             onChange={gridSizeChange}
             id="gridSizeRange"
+            className="" /* For future styling */
           />
         </div>
       </div>
