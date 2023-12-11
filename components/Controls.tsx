@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Grid from "./Grid";
 
 const Controls = () => {
   const [gridSize, setGridSize] = React.useState<number>(16);
+  // Initialize state variable gridSize with default value of 16, setGridSize is function used to update the gridSize state.
+
   const gridSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value, 10); // Extract the new value from the input
-    setGridSize(newValue);
+    // onChange event handler triggers this function
+
+    const newValue = parseInt(event.target.value, 10);
+    // Extracts value from event object triggered by change in input element
+    // Parses extracted value as integer using the parseInt function
+    // Second argument (10) in parseInt specifies the base (decimal in this case) for the conversion
+
+    setGridSize(newValue); //Updates the gridSize state with the parsed integer value obtained from the input element's changed value.
   };
-  /* console.log(gridSize); */
 
   const [selectedColor, setSelectedColor] = useState("#000000"); // Initial color value
-  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedColor(event.target.value); // Update the selected color state
-  };
+
+  const handleColorChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSelectedColor(event.target.value);
+    },
+    [setSelectedColor]
+  );
 
   return (
-    <div className="gridControls flex	justify-center items-center	flex-col xl:flex-row mb-6">
+    <div className="gridUI flex	justify-center items-center	flex-col xl:flex-row mb-6">
       <Grid gridSize={gridSize} selectedColor={selectedColor} />
       <div className="gridControls xl:ml-12 flex flex-col space-y-6 mt-6 sm:mt-5">
         <input
@@ -50,7 +61,7 @@ const Controls = () => {
             value={gridSize}
             onChange={gridSizeChange}
             id="gridSizeRange"
-            className="w-44" /* For future styling */
+            className="w-44"
           />
         </div>
       </div>
