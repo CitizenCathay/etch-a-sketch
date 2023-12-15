@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import Grid from "./Grid";
+import Buttons from "./Buttons";
 
 const Controls = () => {
   const [gridSize, setGridSize] = React.useState<number>(16);
@@ -16,13 +17,34 @@ const Controls = () => {
     setGridSize(newValue); //Updates the gridSize state with the parsed integer value obtained from the input element's changed value.
   };
 
-  const [selectedColor, setSelectedColor] = useState("#000000"); // Initial color value
+  const [selectedColor, setSelectedColor] = useState("#1F2937"); // Initial color value
+
+  const debounce = <F extends (...args: any[]) => void>(
+    func: F,
+    delay: number
+  ): ((...args: Parameters<F>) => void) => {
+    let timeoutId: NodeJS.Timeout;
+    return function (this: ThisParameterType<F>, ...args: Parameters<F>) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
+
+  const debouncedSetSelectedColor = useCallback(
+    debounce((color: string) => {
+      setSelectedColor(color);
+    }, 200), // Adjust the delay time as needed (300ms in this example)
+    []
+  );
 
   const handleColorChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSelectedColor(event.target.value);
+      const newColor = event.target.value;
+      debouncedSetSelectedColor(newColor);
     },
-    [setSelectedColor]
+    [debouncedSetSelectedColor]
   );
 
   return (
@@ -35,23 +57,9 @@ const Controls = () => {
           value={selectedColor}
           onChange={handleColorChange}
         ></input>
-        <button className="border rounded border-black lg:text-lg px-6 py-1 shadow-lg">
-          Color Mode
-        </button>
-        <button className="border rounded border-black  lg:text-lg px-6 py-1 shadow-lg">
-          Rainbow Mode
-        </button>
-        <button className="border rounded border-black  lg:text-lg px-6 py-1 shadow-lg">
-          Eraser
-        </button>
-        <button className="border rounded border-black  lg:text-lg px-6 py-1 shadow-lg">
-          Clear
-        </button>
-        <button className="border rounded border-black  lg:text-lg px-6 py-1 shadow-lg">
-          Toggle Cells
-        </button>
+        <Buttons />
         <div className="sizeControl">
-          <p className="select-none	lg:text-lg">
+          <p className="select-none	lg:text-lg text-gray-800">
             Grid Size: {gridSize} × {gridSize}
           </p>
           <input

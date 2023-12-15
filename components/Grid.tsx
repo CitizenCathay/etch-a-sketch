@@ -67,7 +67,7 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
 
   return (
     <div
-      className="gridContainer mt-1 xl:ml-56 w-96 h-96 md:w-[39rem] md:h-[39rem] sm:h-[30rem] sm:w-[30rem] border-2 border-red-500"
+      className="gridContainer mt-1 xl:ml-56 w-96 h-96 md:w-[39rem] md:h-[39rem] sm:h-[30rem] sm:w-[30rem] border-2 border-gray-800 rounded-sm	"
       ref={gridContainerRef}
       style={gridContainerStyles}
     >
