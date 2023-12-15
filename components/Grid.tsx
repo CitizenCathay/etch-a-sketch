@@ -7,22 +7,28 @@ interface GridProps {
 
 const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
   // Import gridSize value from Controls parent component
-  const gridContainerRef = useRef(null);
 
-  const isMouseDown = useRef(false);
+  const gridContainerStyles = {
+    display: "grid",
+    gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+    gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+  };
+
+  const gridContainerRef = useRef<HTMLDivElement>(null);
+  const isMouseDownRef = useRef(false);
   // State to manage mouse down/up
 
   const handleMouseDown = useCallback(() => {
-    isMouseDown.current = true;
+    isMouseDownRef.current = true;
   }, []);
 
   const handleMouseUp = useCallback(() => {
-    isMouseDown.current = false;
+    isMouseDownRef.current = false;
   }, []);
 
   const handleMouseInteraction = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      if (isMouseDown.current) {
+      if (isMouseDownRef.current) {
         const target = event.target as HTMLDivElement;
         target.style.backgroundColor = selectedColor;
       }
@@ -34,11 +40,13 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
 
   const createGrid = useCallback(
     (gridSize: number) => {
-      const cells: JSX.Element[] = [];
+      let cells: JSX.Element[] = [];
+
       for (let i = 0; i < gridSize * gridSize; i++) {
+        let cellKey = `cell-${gridSize}-${i}`;
         cells.push(
           <div
-            key={i}
+            key={cellKey}
             className="grid-cell select-none"
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -53,6 +61,7 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
   );
 
   useEffect(() => {
+    setGridCells([]);
     createGrid(gridSize); // Create new grid cells when gridSize changes
   }, [gridSize, createGrid]);
 
@@ -60,11 +69,7 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
     <div
       className="gridContainer mt-1 xl:ml-56 w-96 h-96 md:w-[39rem] md:h-[39rem] sm:h-[30rem] sm:w-[30rem] border-2 border-red-500"
       ref={gridContainerRef}
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-        gridTemplateRows: `repeat(${gridSize}, 1fr)`,
-      }}
+      style={gridContainerStyles}
     >
       {gridCells}
     </div>
