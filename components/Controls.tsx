@@ -32,12 +32,9 @@ const Controls = () => {
     };
   };
 
-  const debouncedSetSelectedColor = useCallback(
-    debounce((color: string) => {
-      setSelectedColor(color);
-    }, 200), // Adjust the delay time as needed (300ms in this example)
-    []
-  );
+  const debouncedSetSelectedColor = debounce((color: string) => {
+    setSelectedColor(color);
+  }, 200);
 
   const handleColorChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
