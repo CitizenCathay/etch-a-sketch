@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 
 interface GridProps {
   gridSize: number;
-  selectedColor: string;
+  inputColor: string;
   mode: string;
 }
 
-const Grid: React.FC<GridProps> = ({ gridSize, selectedColor, mode }) => {
+const Grid: React.FC<GridProps> = ({ gridSize, inputColor, mode }) => {
   // Import props from Controls parent component
 
   const gridContainerStyles = {
@@ -39,11 +39,11 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor, mode }) => {
           const randomB = Math.floor(Math.random() * 256);
           target.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
         } else if (mode === "color") {
-          target.style.backgroundColor = selectedColor;
+          target.style.backgroundColor = inputColor;
         }
       }
     },
-    [selectedColor, mode]
+    [inputColor, mode]
   );
 
   const [gridCells, setGridCells] = useState<JSX.Element[]>([]);

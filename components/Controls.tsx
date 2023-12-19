@@ -3,7 +3,7 @@ import Grid from "./Grid";
 
 const Controls = () => {
   const [gridSize, setGridSize] = React.useState<number>(16);
-  const [selectedColor, setSelectedColor] = useState("#1F2937"); // Initial color value
+  const [inputColor, setInputColor] = useState("#1F2937"); // Initial color value
   const [selectedButton, setSelectedButton] = useState<{ mode: string }>({
     mode: "color",
   });
@@ -26,13 +26,13 @@ const Controls = () => {
     };
   };
 
-  const debouncedSetSelectedColor = debounce((color: string) => {
-    setSelectedColor(color);
+  const debouncedSetInputColor = debounce((color: string) => {
+    setInputColor(color);
   }, 200);
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newColor = event.target.value;
-    debouncedSetSelectedColor(newColor);
+    debouncedSetInputColor(newColor);
   };
 
   const handleButtonClick = (mode: string) => {
@@ -49,14 +49,14 @@ const Controls = () => {
     <div className="gridUI flex	justify-center items-center	flex-col xl:flex-row mb-6">
       <Grid
         gridSize={gridSize}
-        selectedColor={selectedColor}
+        inputColor={inputColor}
         mode={selectedButton.mode}
       />
       <div className="gridControls xl:ml-12 flex flex-col space-y-6 mt-6 sm:mt-5">
         <input
           type="color"
           className="w-44 h-12 appearance-none bg-transparent p-0 rounded-lg border-none"
-          value={selectedColor}
+          value={inputColor}
           onChange={handleColorChange}
         ></input>
         <button
@@ -91,9 +91,6 @@ const Controls = () => {
         </button>
         <button className="border rounded border-stone-500  lg:text-lg px-6 py-1 shadow-lg transition duration-200 transform hover:scale-110 hover:bg-gray-800 hover:text-white">
           Clear
-        </button>
-        <button className="border rounded border-stone-500  lg:text-lg px-6 py-1 shadow-lg transition duration-200 transform hover:scale-110 hover:bg-gray-800 hover:text-white">
-          Toggle Cells
         </button>
         <div className="sizeControl">
           <p className="select-none	lg:text-lg text-gray-800">
