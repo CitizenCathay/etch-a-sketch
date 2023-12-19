@@ -3,10 +3,11 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 interface GridProps {
   gridSize: number;
   selectedColor: string;
+  mode: string;
 }
 
-const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
-  // Import gridSize value from Controls parent component
+const Grid: React.FC<GridProps> = ({ gridSize, selectedColor, mode }) => {
+  // Import props from Controls parent component
 
   const gridContainerStyles = {
     display: "grid",
@@ -30,10 +31,19 @@ const Grid: React.FC<GridProps> = ({ gridSize, selectedColor }) => {
     (event: React.MouseEvent<HTMLDivElement>) => {
       if (isMouseDownRef.current) {
         const target = event.target as HTMLDivElement;
-        target.style.backgroundColor = selectedColor;
+        if (mode === "eraser") {
+          target.style.backgroundColor = "#FFFFFF";
+        } else if (mode === "rainbow") {
+          const randomR = Math.floor(Math.random() * 256);
+          const randomG = Math.floor(Math.random() * 256);
+          const randomB = Math.floor(Math.random() * 256);
+          target.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
+        } else if (mode === "color") {
+          target.style.backgroundColor = selectedColor;
+        }
       }
     },
-    [selectedColor]
+    [selectedColor, mode]
   );
 
   const [gridCells, setGridCells] = useState<JSX.Element[]>([]);

@@ -1,23 +1,17 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Grid from "./Grid";
-import Buttons from "./Buttons";
 
 const Controls = () => {
   const [gridSize, setGridSize] = React.useState<number>(16);
-  // Initialize state variable gridSize with default value of 16, setGridSize is function used to update the gridSize state.
+  const [selectedColor, setSelectedColor] = useState("#1F2937"); // Initial color value
+  const [selectedButton, setSelectedButton] = useState<{ mode: string }>({
+    mode: "color",
+  });
 
   const gridSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // onChange event handler triggers this function
-
     const newValue = parseInt(event.target.value, 10);
-    // Extracts value from event object triggered by change in input element
-    // Parses extracted value as integer using the parseInt function
-    // Second argument (10) in parseInt specifies the base (decimal in this case) for the conversion
-
-    setGridSize(newValue); //Updates the gridSize state with the parsed integer value obtained from the input element's changed value.
+    setGridSize(newValue);
   };
-
-  const [selectedColor, setSelectedColor] = useState("#1F2937"); // Initial color value
 
   const debounce = <F extends (...args: any[]) => void>(
     func: F,
@@ -36,17 +30,28 @@ const Controls = () => {
     setSelectedColor(color);
   }, 200);
 
-  const handleColorChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newColor = event.target.value;
-      debouncedSetSelectedColor(newColor);
-    },
-    [debouncedSetSelectedColor]
-  );
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newColor = event.target.value;
+    debouncedSetSelectedColor(newColor);
+  };
+
+  const handleButtonClick = (mode: string) => {
+    if (mode === "color") {
+      setSelectedButton({ mode });
+    } else if (mode === "eraser") {
+      setSelectedButton({ mode });
+    } else if (mode === "rainbow") {
+      setSelectedButton({ mode });
+    }
+  };
 
   return (
     <div className="gridUI flex	justify-center items-center	flex-col xl:flex-row mb-6">
-      <Grid gridSize={gridSize} selectedColor={selectedColor} />
+      <Grid
+        gridSize={gridSize}
+        selectedColor={selectedColor}
+        mode={selectedButton.mode}
+      />
       <div className="gridControls xl:ml-12 flex flex-col space-y-6 mt-6 sm:mt-5">
         <input
           type="color"
@@ -54,7 +59,42 @@ const Controls = () => {
           value={selectedColor}
           onChange={handleColorChange}
         ></input>
-        <Buttons />
+        <button
+          className={`border rounded border-stone-500 lg:text-lg px-6 py-1 shadow-lg transition duration-300 transform hover:scale-110 hover:bg-gray-800 hover:text-white ${
+            selectedButton.mode === "color"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-black"
+          }`}
+          onClick={() => handleButtonClick("color")}
+        >
+          Color Mode
+        </button>
+        <button
+          className={`border rounded border-stone-500 lg:text-lg px-6 py-1 shadow-lg transition duration-300 transform hover:scale-110 hover:bg-gray-800 hover:text-white ${
+            selectedButton.mode === "rainbow"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-black"
+          }`}
+          onClick={() => handleButtonClick("rainbow")}
+        >
+          Rainbow Mode
+        </button>
+        <button
+          className={`border rounded border-stone-500 lg:text-lg px-6 py-1 shadow-lg transition duration-300 transform hover:scale-110 hover:bg-gray-800 hover:text-white ${
+            selectedButton.mode === "eraser"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-black"
+          }`}
+          onClick={() => handleButtonClick("eraser")}
+        >
+          Eraser
+        </button>
+        <button className="border rounded border-stone-500  lg:text-lg px-6 py-1 shadow-lg transition duration-200 transform hover:scale-110 hover:bg-gray-800 hover:text-white">
+          Clear
+        </button>
+        <button className="border rounded border-stone-500  lg:text-lg px-6 py-1 shadow-lg transition duration-200 transform hover:scale-110 hover:bg-gray-800 hover:text-white">
+          Toggle Cells
+        </button>
         <div className="sizeControl">
           <p className="select-none	lg:text-lg text-gray-800">
             Grid Size: {gridSize} × {gridSize}
