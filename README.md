@@ -2,7 +2,7 @@
 
 ## About The Project
 
-![alt text](etch-a-sketch-screenshot.JPG)
+![Image of application](/public/etch-a-sketch-screenshot.JPG)
 
 #### Etch A Sketch Application
 
@@ -17,6 +17,8 @@ This project is an Etch A Sketch application built using React, Next.js, and Tai
 - Customization: Users can choose from 3 different coloring modes. Color Mode, Rainbow Mode and Eraser Mode.
 
 - Responsive Design: The application is designed to work on various screen sizes, making it accessible across different devices.
+
+![Image of application being used](/public/etch-a-sketch-screenshot-2.JPG)
 
 #### What I Learned
 
