@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import Grid from "./Grid";
 
 const Controls = () => {
@@ -88,9 +88,6 @@ const Controls = () => {
           onClick={() => handleButtonClick("eraser")}
         >
           Eraser
-        </button>
-        <button className="border rounded border-stone-500  lg:text-lg px-6 py-1 shadow-lg transition duration-200 transform hover:scale-110 hover:bg-gray-800 hover:text-white">
-          Clear
         </button>
         <div className="sizeControl">
           <p className="select-none	lg:text-lg text-gray-800">
