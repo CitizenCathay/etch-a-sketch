@@ -7,7 +7,7 @@ interface GridProps {
 }
 
 const Grid: React.FC<GridProps> = ({ gridSize, inputColor, mode }) => {
-  // Import props from Controls parent component
+  // React.FC<GridProps>: Indicates that Grid is a functional component (FC) that accepts props defined by the GridProps type/interface
 
   const gridContainerStyles = {
     display: "grid",
@@ -17,7 +17,7 @@ const Grid: React.FC<GridProps> = ({ gridSize, inputColor, mode }) => {
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const isMouseDownRef = useRef(false);
-  // State to manage mouse down/up
+  // reference to track whether the mouse button is currently pressed
 
   const handleMouseDown = useCallback(() => {
     isMouseDownRef.current = true;
@@ -27,23 +27,55 @@ const Grid: React.FC<GridProps> = ({ gridSize, inputColor, mode }) => {
     isMouseDownRef.current = false;
   }, []);
 
+  const handleTouchStart = useCallback(() => {
+    handleMouseDown();
+  }, [handleMouseDown]);
+
+  const handleTouchEnd = useCallback(() => {
+    handleMouseUp();
+  }, [handleMouseUp]);
+
+  const handleColorChange = useCallback(
+    (target: HTMLDivElement) => {
+      if (mode === "eraser") {
+        target.style.backgroundColor = "#FFFFFF";
+      } else if (mode === "rainbow") {
+        const randomR = Math.floor(Math.random() * 256);
+        const randomG = Math.floor(Math.random() * 256);
+        const randomB = Math.floor(Math.random() * 256);
+        target.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
+      } else if (mode === "color") {
+        target.style.backgroundColor = inputColor;
+      }
+    },
+    [inputColor, mode]
+  );
+
   const handleMouseInteraction = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       if (isMouseDownRef.current) {
         const target = event.target as HTMLDivElement;
-        if (mode === "eraser") {
-          target.style.backgroundColor = "#FFFFFF";
-        } else if (mode === "rainbow") {
-          const randomR = Math.floor(Math.random() * 256);
-          const randomG = Math.floor(Math.random() * 256);
-          const randomB = Math.floor(Math.random() * 256);
-          target.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB})`;
-        } else if (mode === "color") {
-          target.style.backgroundColor = inputColor;
+        handleColorChange(target);
+      }
+    },
+    [handleColorChange]
+  );
+
+  const handleTouchMove = useCallback(
+    (event: React.TouchEvent<HTMLDivElement>) => {
+      if (isMouseDownRef.current) {
+        const touch = event.touches[0];
+        const element = document.elementFromPoint(
+          touch.clientX,
+          touch.clientY
+        ) as HTMLDivElement;
+        if (element && element.classList.contains("grid-cell")) {
+          const gridCellElement = element as HTMLDivElement;
+          handleColorChange(gridCellElement);
         }
       }
     },
-    [inputColor, mode]
+    [handleColorChange]
   );
 
   const [gridCells, setGridCells] = useState<JSX.Element[]>([]);
@@ -61,13 +93,23 @@ const Grid: React.FC<GridProps> = ({ gridSize, inputColor, mode }) => {
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseInteraction}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onTouchMove={handleTouchMove}
             style={{ backgroundColor: "white" }} // Set default background color
           ></div>
         );
       }
       setGridCells(cells); // Update grid cells in the state
     },
-    [handleMouseDown, handleMouseUp, handleMouseInteraction]
+    [
+      handleMouseDown,
+      handleMouseUp,
+      handleMouseInteraction,
+      handleTouchStart,
+      handleTouchEnd,
+      handleTouchMove,
+    ]
   );
 
   useEffect(() => {
