@@ -113,9 +113,31 @@ const Grid: React.FC<GridProps> = ({ gridSize, inputColor, mode }) => {
   );
 
   useEffect(() => {
-    setGridCells([]);
-    createGrid(gridSize); // Create new grid cells when gridSize changes
+    setGridCells([]); // Clears the existing grid cells array
+    createGrid(gridSize); // Creates new grid cells when gridSize changes
   }, [gridSize, createGrid]);
+
+  // useEffect hook to add event listeners to prevent scrolling on grid element on touch devices
+  useEffect(() => {
+    const preventScroll = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
+    const gridContainer = gridContainerRef.current;
+
+    // If the grid container exists, add an event listener to prevent scrolling on touchmove
+    if (gridContainer) {
+      gridContainer.addEventListener("touchmove", preventScroll, {
+        passive: false,
+      });
+    }
+
+    return () => {
+      if (gridContainer) {
+        gridContainer.removeEventListener("touchmove", preventScroll);
+      }
+    };
+  }, [gridContainerRef]);
 
   return (
     <div
